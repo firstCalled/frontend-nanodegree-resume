@@ -20,6 +20,25 @@ var bio = {
 	"bioPic": "images/profilePic.jpg"
 };
 
+var work = {}
+work.currentJob = "Compliance Consultant, Anti-Money Laundering";
+work.employer = "Wells Fargo";
+work.yearsOfExp = "2011 to Present";
+work.city = "Salt Lake City";
+
+var education = {
+	"schools": [
+		{
+			"name": "DevMountain",
+			"city": "Salt Lake City, UT",
+			"major": "Full Stack Web Development",
+			"minor": null,
+			"graduationYear": "2014",
+			"online course": null
+		},
+	]
+}
+
 var name = bio.name;
 var formattedName = HTMLheaderName.replace("%data%", name);
 var role = bio.role;
@@ -53,7 +72,7 @@ var formattedMessage = HTMLWelcomeMsg.replace("%data%", welcomeMessage);
 $("#header").append(formattedMessage);
 
 var bioPic = bio.bioPic;
-var formattedPic = HTMLbioPic.replace("&data%", bioPic);
+var formattedPic = HTMLbioPic.replace("%data%", bioPic);
 $("#header").append(formattedPic);
 
 var skills = bio.skills;
@@ -61,7 +80,13 @@ var formattedSkills = HTMLskills.replace("%data%", skills);
 $("#header").append(HTMLskillsStart);
 $("#header").append(formattedSkills);
 
+var workPosition = work.currentJob;
+var formattedJob = HTMLworkTitle.replace("%data%", workPosition);
+$("#header").append(formattedJob);
 
+var schoolName = education["school"];
+var formattedSchoolName = HTMLschoolName.replace("%data%", schoolName);
+$("#header").append(formattedSchoolName);
 
 
 
