@@ -1,5 +1,6 @@
 var bio = {
-	"name": "Andrew Heidebrecht",
+	"firstName": "Andrew",
+	"lastName": "Heidebrecht",
 	"role": "Web Developer",
 	"contactInfo": {
 		"mobile": "801/673-4665",
@@ -71,6 +72,12 @@ var work = {
 var projectwork = {
 	"projects": [
 		{
+			"projectTitle": "CashProWeb Conversion",
+			"projectStart": "August 2003",
+			"projectDates": "12 months",
+			"projectDescription": "Migrate business banking clients from a DOS-based banking platform to a web-based banking platform"
+		},
+		{
 			"projectTitle": "Continental Payment Schedules",
 			"projectStart": "June 2013",
 			"projectDates": "6 months",
@@ -119,8 +126,8 @@ var education = {
 
 
 
-var name = bio.name;
-var formattedName = HTMLheaderName.replace("%data%", name);
+var fullName = bio.firstName + " " + bio.lastName;
+var formattedName = HTMLheaderName.replace("%data%", fullName);
 var role = bio.role;
 var formattedRole = HTMLheaderRole.replace("%data%", role);
 
@@ -155,6 +162,19 @@ var bioPic = bio.bioPic;
 var formattedPic = HTMLbioPic.replace("%data%", bioPic);
 $("#header").append(formattedPic);
 
+// $("#main").append(internationalizeButton);
+// The above line is commented out because I don't need the Internationalize button at this time.
+
+function inName(fullName) {
+    var finalName = fullName;
+    var names = fullName.split(" ");
+    names[1] = names[1].toUpperCase();
+    names[0] = names[0][0].toUpperCase() + names[0].slice(1).toLowerCase();
+    finalName = names.join(" ");
+    
+    return finalName;
+}
+
 if (bio.skills.length > 0){
 	$("#header").append(HTMLskillsStart);
 	var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
@@ -166,25 +186,45 @@ if (bio.skills.length > 0){
 	formattedSkill = HTMLskills.replace("%data%", bio.skills[3]);
 	$("#skills").append(formattedSkill);
 };
+function displayWork() {
+	for(job in work.jobs){
+		$("#workExperience").append(HTMLworkStart); 
+		var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+		var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+		var formattedEmployerTitle = formattedEmployer + formattedTitle;
+		$(".work-entry:last").append(formattedEmployerTitle);
+		var formattedworkDates = HTMLworkDates.replace("%data%", work.jobs[job].startDate + " - " + work.jobs[job].endDate);
+		$(".work-entry:last").append(formattedworkDates);
+		var formattedworkLocation = HTMLworkLocation.replace("%data%", work.jobs[job].location);
+		$(".work-entry:last").prepend(formattedworkLocation);
+		var formattedworkDescription = HTMLworkDescription.replace("%data%", work.jobs[job].jobDescription);
+		$(".work-entry:last").append(formattedworkDescription);
+	}
+}
+displayWork();
 
-for(job in work.jobs){
-	$("#workExperience").append(HTMLworkStart); 
-	var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-	var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
-	var formattedEmployerTitle = formattedEmployer + formattedTitle;
-	$(".work-entry:last").append(formattedEmployerTitle);
+projects.display = function() {
+	for(project in projectwork.projects) {
+		$("#projects").append(HTMLprojectStart);
+		var formattedProject = HTMLprojectTitle.replace("%data%", projectwork.projects[project].projectTitle);
+		$(".project-entry:last").append(formattedProject);
+		var formattedProjectStartDate = HTMLworkDates.replace("%data%", projectwork.projects[project].projectStart);
+		$(".project-entry:last").append(formattedProjectStartDate);
+		var formattedProjectDesc = HTMLprojectDescription.replace("%data%", projectwork.projects[project].projectDescription);
+		$(".project-entry:last").append(formattedProjectDesc);
+	}
 };
 
-/*
-var workPosition = work.jobs[0].title;
-var formattedJob = HTMLworkTitle.replace("%data%", workPosition);
-$("#header").append(formattedJob);
+projects.display();
 
-var schoolName = education.schools[0].name;
-var formattedSchoolName = HTMLschoolName.replace("%data%", schoolName);
-$("#header").append(formattedSchoolName);
-*/
+$(document).click(function(loc) {
+  	var x = loc.pageX;
+  	var y = loc.pageY;
+  
+  logClicks(x,y);
+});
 
+$("#mapDiv").append(googleMap);
 
 
 
